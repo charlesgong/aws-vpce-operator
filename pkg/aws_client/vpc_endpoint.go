@@ -154,7 +154,7 @@ func (c *AWSClient) DescribeSingleVPCEndpointById(ctx context.Context, id string
 		if errors.As(err, &ae) {
 			// Don't return an error if the VPC endpoint with the specified ID doesn't exist
 			if ae.ErrorCode() == "InvalidVpcEndpointId.NotFound" {
-				return nil, nil
+				return nil, fmt.Errorf("VPC endpoint not found: %w", err)
 			}
 		}
 		return nil, err
